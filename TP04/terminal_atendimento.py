@@ -1,8 +1,8 @@
-from TP04.sisbanco import Conta, Banco, ContaPoupanca, ContaEspecial
+from sisbanco import Conta, Banco, ContaPoupanca, ContaEspecial
 import os
 
 def terminal():
-    sisbanco = Banco(0.01)
+    sisbanco = Banco()
     while(True):
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -16,7 +16,8 @@ def terminal():
         print("[5] - Render juros")
         print("[6] - Render Bonus")
         print("[7] - Alterar Taxa de Juros")
-        print("[8] - Sair")
+        print("[8] - Alterar Taxa de Imposto")
+        print("[9] - Sair")
 
         opcao = int(input("Digite: "))
 
@@ -95,10 +96,17 @@ def terminal():
             # solicite a nova taxa de correção da poupança
             nova_taxa = float(input("Digite a nova taxa de correção da poupança: "))
             # realize a operação de alteração da taxa no sisbanco
-            sisbanco.set_taxa(nova_taxa)
+            sisbanco.set_taxa_poupanca(nova_taxa)
             input("Pressione Enter para continuar...")
 
         elif opcao == 8:
+            # solicite a nova taxa de correção da poupança
+            nova_taxa = float(input("Digite a nova taxa de imposto: "))
+            # realize a operação de alteração da taxa no sisbanco
+            sisbanco.set_taxa_imposto(nova_taxa)
+            input("Pressione Enter para continuar...")
+        
+        elif opcao == 9:
             print("SisBanco::Bye!")
             input("Pressione Enter para continuar...")
             break 

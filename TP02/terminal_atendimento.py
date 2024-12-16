@@ -1,4 +1,4 @@
-from sisbanco import Conta, Banco
+from TP04.sisbanco import Conta, Banco
 import os
 
 def terminal():
