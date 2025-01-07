@@ -1,0 +1,160 @@
+Bugs Inseridos no Sistema SisBanco (sisbanco_bugs.py)
+
+====================================================
+Bug #1 - ContaAbstrata
+====================================================
+#Sem Bug
+   def __init__(self, numero:str):
+      self.__numero = numero
+      self._saldo = 0.0
+
+#Com Bug
+   def __init__(self, numero:str):
+      self.__numero = numero
+      self._saldo = -1.0
+
+====================================================
+Bug #2 - ContaAbstrata
+====================================================
+#Sem Bug
+   def creditar(self, valor:float) -> None:
+      self._saldo += valor
+
+#Com Bug
+   def creditar(self, valor:float) -> None:
+      self._saldo -= valor
+
+====================================================
+Bug #3 - ContaAbstrata
+====================================================
+#Sem Bug
+   def get_saldo(self) -> float:
+      return self._saldo
+
+#Com Bug
+   def get_saldo(self) -> float:
+      return self.__numero
+
+====================================================
+Bug #4 - Conta
+====================================================
+#Sem Bug
+   def debitar(self, valor:float) -> None:
+      self._saldo -= valor
+
+#Com Bug
+   def debitar(self, valor:float) -> None:
+      self._saldo += valor
+
+====================================================
+Bug #5 - ContaPoupanca
+====================================================
+#Sem Bug
+   def render_juros(self, taxa:float) -> None:
+      self.creditar(self.get_saldo() * taxa)
+
+#Com Bug
+   def render_juros(self, taxa:float) -> None:
+      self.creditar(self.get_saldo() / taxa)
+
+====================================================
+Bug #6 - ContaEspecial
+====================================================
+#Sem Bug
+   def render_bonus(self) -> None:
+      super().creditar(self.__bonus)
+      self.__bonus = 0
+
+#Com Bug
+   def render_bonus(self) -> None:
+      super().creditar(self.__bonus)
+
+====================================================
+Bug #7 - ContaImposto
+====================================================
+#Sem Bug
+   def debitar(self, valor:float) -> None:
+      self._saldo -= (valor + (valor * self.__taxa))
+
+#Com Bug
+   def debitar(self, valor:float) -> None:
+      self._saldo -= (valor - (valor * self.__taxa))
+
+====================================================
+Bug #8 - Banco
+====================================================
+#Sem Bug
+   def cadastrar(self, conta: ContaAbstrata) -> None:
+      if isinstance(conta, ContaImposto):
+         conta.set_taxa(self.__taxa_imposto)
+
+      self.__contas.append(conta)
+
+#Com Bug
+   def cadastrar(self, conta: ContaAbstrata) -> None:
+      self.__contas.append(conta)
+
+====================================================
+Bug #9 - Banco
+====================================================
+#Sem Bug
+   def creditar(self, numero:str, valor:float) -> None:
+      conta = self.procurar(numero)
+      if conta is not None:
+         conta.creditar(valor)
+
+#Com Bug
+   def creditar(self, numero:str, valor:float) -> None:
+      conta = self.procurar(numero)
+      if conta is not None:
+         conta.debitar(valor)
+
+====================================================
+Bug #10 - Banco
+====================================================
+#Sem Bug
+   def debitar(self, numero:str, valor:float) -> None:
+      conta = self.procurar(numero)
+      if conta is not None:
+         conta.debitar(valor)
+
+#Com Bug
+   def debitar(self, numero:str, valor:float) -> None:
+      conta = self.procurar(numero)
+      if conta is not None:
+         conta.creditar(valor)
+
+====================================================
+Bug #11 - Banco
+====================================================
+#Sem Bug
+   def transferir(self, origem:str, destino:str, valor:float) -> None:
+      conta_origem = self.procurar(origem)
+      if conta_origem is not None:
+         conta_destino = self.procurar(destino)
+         if conta_destino is not None:
+            conta_origem.debitar(valor)
+            conta_destino.creditar(valor)
+
+#Com Bug
+   def transferir(self, origem:str, destino:str, valor:float) -> None:
+      conta_origem = self.procurar(origem)
+      if conta_origem is not None:
+         conta_destino = self.procurar(destino)
+         if conta_destino is not None:
+            conta_origem.creditar(valor)
+            conta_destino.debitar(valor)
+
+====================================================
+Bug #12 - Banco
+====================================================
+#Sem Bug
+   def set_taxa_imposto(self, taxa:float) -> None:
+      self.__taxa_imposto = taxa
+      for conta in self.__contas:
+         if isinstance(conta, ContaImposto):
+            conta.set_taxa(self.__taxa_imposto)
+
+#Com Bug
+   def set_taxa_imposto(self, taxa:float) -> None:
+      self.__taxa_imposto = taxa
