@@ -15,12 +15,10 @@ celsius_to_farenheit = lambda c: (c * 9/5) + 32
 round_value = lambda x: round(x)
 funcao_composta = lambda c: round_value(celsius_to_farenheit(c))
 lista_celsius = [10, 100, 0, 30]
-celsius_convertidos = [
-    f for f in map(
+celsius_convertidos = list(map(
         lambda c: funcao_composta(c), 
         lista_celsius
-    )
-]
+    ))
 print(celsius_convertidos)  # Output: [50, 212, 32, 86]
 
 # 2.1 Transformar palavras em maiúsculas
@@ -159,5 +157,5 @@ def fibonacci(limit):
         yield b
         a, b = b, a + b
 
-fib_list = [val for val in fibonacci(100)]  # Exemplo: limite 100
-print(fib_list)  # Output: [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+fib_list = [val for val in fibonacci(int(input("Qual o valor limite? ")))]
+print(fib_list)

@@ -40,7 +40,7 @@ class ContaPoupanca(Conta):
    def render_juros(self, taxa:float) -> None:
       if taxa is not None or taxa > 0:
          self.creditar(self.get_saldo() * taxa)
-      else: TJIException(self.__numero, taxa)
+      else: raise TJIException(self.__numero, taxa)
 
 
 class ContaEspecial(Conta):
@@ -92,8 +92,8 @@ class Banco:
 
             self.__contas.append(conta)
 
-         else: CEException(conta.get_numero)
-      else: CIException(conta.get_numero())
+         else: raise CEException(conta.get_numero)
+      else: raise CIException(conta.get_numero())
       
    def procurar(self, numero:str) -> ContaAbstrata:
       for conta in self.__contas:
@@ -105,19 +105,19 @@ class Banco:
       conta = self.procurar(numero)
       if conta is not None:
          conta.creditar(valor)
-      else: CIException(numero)
+      else: raise CIException(numero)
 
    def debitar(self, numero:str, valor:float) -> None:
       conta = self.procurar(numero)
       if conta is not None:
          conta.debitar(valor)
-      else: CIException(numero)
+      else: raise CIException(numero)
 
    def saldo(self, numero:str) -> float:
       conta = self.procurar(numero)
       if conta is not None:
          return conta.get_saldo()
-      else: CIException(numero)
+      else: raise CIException(numero)
       return None
 
    def transferir(self, origem:str, destino:str, valor:float) -> None:
@@ -127,8 +127,8 @@ class Banco:
          if conta_destino is not None:
             conta_origem.debitar(valor)
             conta_destino.creditar(valor)
-         else: CIException(conta_destino.get_numero())
-      else: CIException(conta_origem.get_nummero())
+         else: raise CIException(conta_destino.get_numero())
+      else: raise CIException(conta_origem.get_nummero())
 
    def get_taxa_poupanca(self) -> float:
       return self.__taxa_poupanca
@@ -150,11 +150,11 @@ class Banco:
       if conta is not None:
          if isinstance(conta, ContaPoupanca):
             conta.render_juros(self.__taxa_poupanca)
-      else: CIException(numero)
+      else: raise CIException(numero)
 
    def render_bonus(self, numero:str) -> None:
       conta = self.procurar(numero)
       if conta is not None:
          if isinstance(conta, ContaEspecial):
             conta.render_bonus()
-      else: CIException(numero)
+      else: raise CIException(numero)

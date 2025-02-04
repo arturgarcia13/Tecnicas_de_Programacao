@@ -85,5 +85,16 @@ class TestClassesSisbanco(unittest.TestCase):
         self.assertEqual(self.sisbanco.saldo("456"), 90, "Transferência não debitada corretamente")
         self.assertEqual(self.sisbanco.saldo("123"), 110, "Transferência não creditada corretamente")
 
+
+# def suite():
+#     suite = unittest.TestSuite()
+#     suite.addTest(TestClassesSisbanco('test_saldo_inicial'))
+#     suite.addTest(TestClassesSisbanco('test_conta_simples_creditar'))
+#     return suite
+
+# if __name__ == '__main__':
+#     runner = unittest.TextTestRunner()
+#     runner.run(suite())
+
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)
