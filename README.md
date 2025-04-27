@@ -62,8 +62,6 @@ O repositório está dividido em atividades práticas e um trabalho final:
 - LUTZ, Mark; ASCHER, David. *Aprendendo Python*. 2ª ed., Bookman, 2008.
 - KNUTH, Donald Ervin. *The Art of Computer Programming*. 3rd ed., Addison-Wesley, 1997.
 
-Bibliografia complementar disponível no [plano de ensino](./).
-
 ## 📝 Licença
 
 Este projeto está licenciado sob a licença **MIT** — sinta-se livre para usar e modificar.
